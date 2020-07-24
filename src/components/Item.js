@@ -1,8 +1,14 @@
 import React /*{useState}*/ from 'react';
 import styled from "styled-components";
 
-const Item = ({item, numCookies, setNumCookies, boughtItems, setBoughtItems}) => {
-    
+const Item = ({item, numCookies, setNumCookies, boughtItems, setBoughtItems, index}) => {
+    const firstItemRef = React.createRef(null);
+
+    React.useEffect(() => {
+        if(index === 0){
+            firstItemRef.current.focus();
+        }
+    }, []);
 
     const handleClick = e => {
         if(numCookies < item.cost) {
@@ -15,7 +21,7 @@ const Item = ({item, numCookies, setNumCookies, boughtItems, setBoughtItems}) =>
     }
     
     return (
-        <ItemContainer onClick={handleClick}>
+        <ItemContainer onClick={handleClick} ref={firstItemRef}>
             <ItemInfo>
                 <div style={{marginTop: 10}}>
                     <h1 style={{marginRight: "100%"}}>{item.name}</h1>

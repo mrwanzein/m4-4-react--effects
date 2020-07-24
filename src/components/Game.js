@@ -69,13 +69,14 @@ const Game = () => {
 
       <ItemArea>
         <SectionTitle>Items:</SectionTitle>
-        {items.map(item => <Item 
+        {items.map((item, index) => <Item 
           key={item.id} 
           item={item} 
           numCookies={numCookies}
           setNumCookies={setNumCookies}
           boughtItems={boughtItems}
           setBoughtItems={setBoughtItems}
+          index={index}
         />)}
       </ItemArea>
       <HomeLink to="/">Return home</HomeLink>
