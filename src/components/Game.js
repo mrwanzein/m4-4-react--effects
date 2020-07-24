@@ -34,6 +34,13 @@ const Game = () => {
     setNumCookies(numCookies + numOfGeneratedCookies);
   }, 1000);
 
+  React.useEffect(() => {
+    document.title = `${numCookies} cookies - Cookie Clicker Workshop`;
+    return () => {
+      document.title = 'Cookie Clicker Workshop';
+    }
+  }, [numCookies]);
+
   return (
     <Wrapper>
       <GameArea>
