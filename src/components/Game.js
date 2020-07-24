@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -12,13 +12,13 @@ const items = [
 ];
 
 const Game = () => {
-  // TODO: Replace this with React state!
-  const numCookies = 100;
-  const purchasedItems = {
+
+  const [numCookies, setNumCookies] = useState(10000);
+  const [boughtItems, setBoughtItems] = useState({
     cursor: 0,
     grandma: 0,
     farm: 0,
-  };
+  });
 
   return (
     <Wrapper>
@@ -28,14 +28,21 @@ const Game = () => {
           {/* TODO: Calcuate the cookies per second and show it here: */}
           <strong>0</strong> cookies per second
         </Indicator>
-        <Button>
+        <Button onClick={() => setNumCookies(numCookies + 1)}>
           <Cookie src={cookieSrc} />
         </Button>
       </GameArea>
 
       <ItemArea>
         <SectionTitle>Items:</SectionTitle>
-        {items.map(item => <Item key={item.id} item={item} purchasedItems={purchasedItems}/>)}
+        {items.map(item => <Item 
+          key={item.id} 
+          item={item} 
+          numCookies={numCookies}
+          setNumCookies={setNumCookies}
+          boughtItems={boughtItems}
+          setBoughtItems={setBoughtItems}
+        />)}
       </ItemArea>
       <HomeLink to="/">Return home</HomeLink>
     </Wrapper>

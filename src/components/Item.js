@@ -1,9 +1,17 @@
-import React from 'react';
+import React /*{useState}*/ from 'react';
 import styled from "styled-components";
 
-const Item = ({item, purchasedItems}) => {
+const Item = ({item, numCookies, setNumCookies, boughtItems, setBoughtItems}) => {
+    
+
     const handleClick = e => {
-        console.log('Hey there');
+        if(numCookies < item.cost) {
+            alert('Insufficient funds m8');
+            return;
+        } else {
+            setNumCookies(numCookies - item.cost);
+            setBoughtItems({...boughtItems,  [item.id]: boughtItems[item.id] + 1})
+        }
     }
     
     return (
@@ -14,7 +22,7 @@ const Item = ({item, purchasedItems}) => {
                     <ItemProductionDescription>{`Cost: ${item.cost} cookie(s). Produces ${item.value} cookie(s)/second`}</ItemProductionDescription>
                 </div>
                 <ItemOwnedCount>
-                    {purchasedItems[item.id]}
+                    {boughtItems[item.id]}
                 </ItemOwnedCount>
             </ItemInfo>
         </ItemContainer>
