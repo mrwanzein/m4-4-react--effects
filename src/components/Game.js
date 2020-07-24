@@ -20,6 +20,29 @@ const calculateCookiesPerTick = (itemsObj, items) => {
   return finalMultiplier;
 }
 
+const useKeydown = (keyName, callBack) => {
+  const handleKeydown = (ev) => {
+    if (ev.code === keyName) {
+      callBack();
+    }
+  }
+
+  React.useEffect(() => {
+      window.addEventListener("keydown", handleKeydown);
+      return () => {
+        window.removeEventListener("keydown", handleKeydown);
+      }
+  });
+}
+
+const useDocumentTitle = (title, fallbackTitle) => {
+  React.useEffect(() => {
+    document.title = title;
+    return () => {
+      document.title = fallbackTitle;
+    }
+  }, [title]);
+}
 
 const Game = () => {
   
@@ -35,25 +58,8 @@ const Game = () => {
     setNumCookies(numCookies + numOfGeneratedCookies);
   }, 1000);
   
-  React.useEffect(() => {
-    document.title = `${numCookies} cookies - Cookie Clicker Workshop`;
-    return () => {
-      document.title = 'Cookie Clicker Workshop';
-    }
-  }, [numCookies]);
-  
-  const handleKeydown = (ev) => {
-    if (ev.code === "Space") {
-      setNumCookies(numCookies + 1);
-    }
-  }
-  
-  React.useEffect(() => {
-    window.addEventListener("keydown", handleKeydown);
-    return () => {
-      window.removeEventListener("keydown", handleKeydown);
-    }
-  });
+  useKeydown('Space', () => setNumCookies(numCookies + 1));
+  useDocumentTitle(`${numCookies} cookies - Cookie Clicker Workshop`, 'Cookie Clicker Workshop');
 
   return (
     <Wrapper>
