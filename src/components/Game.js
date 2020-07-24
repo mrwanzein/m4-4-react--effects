@@ -20,26 +20,40 @@ const calculateCookiesPerTick = (itemsObj, items) => {
   return finalMultiplier;
 }
 
-const Game = () => {
 
+const Game = () => {
+  
   const [numCookies, setNumCookies] = useState(10000);
   const [boughtItems, setBoughtItems] = useState({
     cursor: 0,
     grandma: 0,
     farm: 0,
   });
-
+  
   useInterval(() => {
     const numOfGeneratedCookies = calculateCookiesPerTick(boughtItems, items);
     setNumCookies(numCookies + numOfGeneratedCookies);
   }, 1000);
-
+  
   React.useEffect(() => {
     document.title = `${numCookies} cookies - Cookie Clicker Workshop`;
     return () => {
       document.title = 'Cookie Clicker Workshop';
     }
   }, [numCookies]);
+  
+  const handleKeydown = (ev) => {
+    if (ev.code === "Space") {
+      setNumCookies(numCookies + 1);
+    }
+  }
+  
+  React.useEffect(() => {
+    window.addEventListener("keydown", handleKeydown);
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+    }
+  });
 
   return (
     <Wrapper>
